@@ -1,4 +1,4 @@
-package com.example.lms.member;
+package com.example.lms.member.model;
 
 import lombok.Data;
 import lombok.ToString;
