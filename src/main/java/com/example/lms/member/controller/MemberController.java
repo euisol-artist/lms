@@ -7,6 +7,7 @@ import com.example.lms.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,9 +29,10 @@ public class MemberController {
     }
 
     @PostMapping("/member/register")
-    public String registerSubmit(HttpServletRequest request, MemberInput parameter) {
+    public String registerSubmit(Model model, HttpServletRequest request, MemberInput parameter) {
 
         boolean result = memberService.register(parameter);
+        model.addAttribute("result", result);
 
         return "member/register_complete";
     }

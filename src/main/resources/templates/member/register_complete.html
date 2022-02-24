@@ -5,8 +5,16 @@
     <title>회원 가입 완료</title>
 </head>
 <body>
-    <h1>회원 가입 완료</h1>
-    <p>회원 가입이 완료되었습니다.</p>
+
+    <div th:text="${result}">
+        <h1>회원 가입 완료</h1>
+        <p>회원 가입이 완료되었습니다.</p>
+    </div>
+
+    <div th:text="${result eq false}">
+        <h1>회원 가입 결과</h1>
+        <p>회원 가입이 실패되었습니다.</p>
+    </div>
 
 </body>
 </html>
