@@ -4,6 +4,7 @@ spring:
     driver-class-name: org.mariadb.jdbc.Driver
     username : minicampus_user
     password : a1234
+
   jpa:
     generate-ddl: true
     hibernate:

@@ -1,4 +1,4 @@
-package com.example.lms;
+package com.example.lms.main.controller;
 
 import com.example.lms.components.MailComponents;
 import lombok.RequiredArgsConstructor;
@@ -13,7 +13,12 @@ public class MainController {
 
     @RequestMapping("/")
     public String index() {
-        mailComponents.sendMailTest();
+
+        String email = "owrx887@gmail.com";
+        String subject = "안녕하세요.";
+        String text = "<p>안녕하세요.</p><p>반갑습니다.</p>";
+
+        mailComponents.sendMail(email, subject, text);
 
         return "index";
     }
