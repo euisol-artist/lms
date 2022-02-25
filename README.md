@@ -3,6 +3,6 @@ lms
 </br>
 first project by using java
 </br>
-IntelliJ IDEA
+IntelliJ
 </br>
-mariaDB
+mariadb
