@@ -23,15 +23,21 @@ public class MemberController {
         return "member/login";
     }
 
-    @GetMapping("/member/find/passowrd")
+    @GetMapping("/member/find-password")
     public String findPassword() {
         return "member/find_password";
     }
 
-    @PostMapping("/member/find/password")
+    @PostMapping("/member/find-password")
     public String findPasswordSubmit(Model model, ResetPasswordInput parameter) {
-        //boolean result = memberService.sendResetPassword(parameter);
-        //model.addAttribute("result", result);
+
+        boolean result = false;
+        try {
+            result = memberService.sendResetPassword(parameter);
+        } catch (Exception e) {
+
+        }
+        model.addAttribute("result", result);
 
         return "member/find_password_result";
     }
@@ -65,5 +71,32 @@ public class MemberController {
     @GetMapping("/member/info")
     public String memberInfo() {
         return "member/info";
+    }
+
+    @GetMapping("/member/reset/password")
+    public String resetPassword(Model model, HttpServletRequest request) {
+
+        String uuid = request.getParameter("id");
+
+        boolean result = memberService.checkResetPassword(uuid);
+
+        model.addAttribute("result", result);
+
+        return "member/reset_password";
+    }
+
+    @PostMapping("/member/reset/password")
+    public String resetPasswordSubmit(Model model, ResetPasswordInput parameter){
+
+        boolean result = false;
+        try {
+            result = memberService.resetPassword(parameter.getId(), parameter.getPassword());
+        } catch (Exception e) {
+
+        }
+
+        model.addAttribute("result", result);
+
+        return "member/reset_password_result";
     }
 }
