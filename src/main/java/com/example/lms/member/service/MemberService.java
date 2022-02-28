@@ -21,6 +21,9 @@ public interface MemberService extends UserDetailsService {
     /* 회원 목록 리턴(관리자에서만 사용 가능) */
     List<MemberDto> list(MemberParam parameter);
 
+    /* 회원 상세 정보 */
+    MemberDto detail(String userId);
+
     boolean resetPassword(String uuid, String password);
 
     boolean checkResetPassword(String uuid);
