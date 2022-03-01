@@ -16,19 +16,7 @@
 <body>
     <h1>관리자 회원 관리 - 회원 상세 정보</h1>
 
-    <div>
-        <a href="/admin/main.do"> 관리자 메인 </a>
-        |
-        <a href="/admin/member/list.do"> 회원 목록 </a>
-        |
-        <a href="#"> 카테고리 관리 </a>
-        |
-        <a href="#"> 강의 관리 </a>
-        |
-        <a href="/member/logout"> 로그 아웃 </a>
-        <br/>
-        <hr/>
-    </div>
+    <div th:replace="/fragments/layout.html :: fragment-admin-body-menu"></div>
 
     <div class="detail">
 
@@ -68,6 +56,42 @@
                     <th>관리자 여부</th>
                     <td>
                         <a th:text="${member.adminYn}"></a>
+                    </td>
+                </tr>
+
+                <tr>
+                    <th>회원 상태</th>
+                    <td>
+                        <a>
+                            현재상태: <span th:text="${member.userStatus}"></span>
+                        </a>
+                        <div>
+                            <form method="post" action="/admin/member/status.do">
+                                <input th:value="${member.userId}" type="hidden" name="userId"/>
+                                <select name="userStatus">
+                                    <option value="REQ">가입승인중</option>
+                                    <option value="ING">정상이용중</option>
+                                    <option value="STOP">정지중</option>
+                                </select>
+                                <button type="submit">상태 변경</button>
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+
+                <tr>
+                    <th>비밀번호 초기화</th>
+                    <td>
+                        <a>
+                            현재상태: <span th:text="${member.userStatus}"></span>
+                        </a>
+                        <div>
+                            <form method="post" action="/admin/member/password.do">
+                                <input th:value="${member.userId}" type="hidden" name="userId"/>
+                                <input type="text" name="password"/>
+                                <button type="submit">비밀번호 초기화</button>
+                            </form>
+                        </div>
                     </td>
                 </tr>
             </tbody>
