@@ -1,13 +1,9 @@
 package com.example.lms.admin.service;
 
 import com.example.lms.admin.dto.CategoryDto;
-import com.example.lms.admin.entity.Category;
 import com.example.lms.admin.model.CategoryInput;
-import com.example.lms.member.entity.Member;
-import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface CategoryService {
 
@@ -21,5 +17,8 @@ public interface CategoryService {
     
     /*카테고리 삭제*/
     boolean del(long id);
+
+    /*프론트 카테고리 정보*/
+    List<CategoryDto> frontList(CategoryDto parameter);
 
 }

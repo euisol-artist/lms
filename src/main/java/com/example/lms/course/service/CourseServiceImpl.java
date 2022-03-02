@@ -10,7 +10,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
-import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -104,9 +103,44 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public CourseDto getById(long id) {
-
         return courseRepository.findById(id).map(CourseDto::of).orElse(null);
+    }
 
+    @Override
+    public boolean del(String idList) {
+
+        if (idList != null && idList.length() > 0) {
+            String[] ids = idList.split(",");
+            for(String x : ids) {
+                long id = 0L;
+                try {
+                    id = Long.parseLong(x);
+                } catch (Exception e) {
+                }
+
+                if (id > 0) {
+                    courseRepository.deleteById(id);
+                }
+            }
+        }
+
+        return false;
+    }
+
+    @Override
+    public List<CourseDto> frontList(CourseParam parameter) {
+
+        if (parameter.getCategoryId() < 1) {
+            List<Course> courseList = courseRepository.findAll();
+            return CourseDto.of(courseList);
+        }
+
+        Optional<List<Course>> optionalCourses = courseRepository.findByCategoryId(parameter.getCategoryId());
+        if (optionalCourses.isPresent()) {
+            return CourseDto.of(optionalCourses.get());
+        }
+
+        return null;
     }
 }
 
