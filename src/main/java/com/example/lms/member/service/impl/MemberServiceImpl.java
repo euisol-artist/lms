@@ -119,6 +119,7 @@ public class MemberServiceImpl implements MemberService {
     public List<MemberDto> list(MemberParam parameter) {
 
         long totalCount = memberMapper.selectListCount(parameter);
+
         List<MemberDto> list = memberMapper.selectList(parameter);
         if (!CollectionUtils.isEmpty(list)) {
             int i = 0;

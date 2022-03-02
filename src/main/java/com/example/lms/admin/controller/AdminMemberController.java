@@ -3,8 +3,10 @@ package com.example.lms.admin.controller;
 import com.example.lms.admin.dto.MemberDto;
 import com.example.lms.admin.model.MemberParam;
 import com.example.lms.admin.model.MemberInput;
+import com.example.lms.course.controller.BaseController;
 import com.example.lms.member.service.MemberService;
 import com.example.lms.util.PageUtil;
+import com.fasterxml.jackson.databind.ser.Serializers;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,7 +17,7 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @Controller
-public class AdminMemberController {
+public class AdminMemberController extends BaseController {
 
     private final MemberService memberService;
 
@@ -23,7 +25,6 @@ public class AdminMemberController {
     public String list(Model model, MemberParam parameter) {
 
         parameter.init();
-
         List<MemberDto> members = memberService.list(parameter);
 
         long totalCount = 0;
@@ -31,12 +32,11 @@ public class AdminMemberController {
             totalCount = members.get(0).getTotalCount();
         }
         String queryString = parameter.getQueryString();
-
-        PageUtil pageUtil = new PageUtil(totalCount, parameter.getPageSize(), parameter.getPageIndex(), queryString);
+        String pagerHtml = getPaperHtml(totalCount, parameter.getPageSize(), parameter.getPageIndex(), queryString);
 
         model.addAttribute("list", members);
         model.addAttribute("totalCount", totalCount);
-        model.addAttribute("pager", pageUtil.pager());
+        model.addAttribute("pager", pagerHtml);
 
         return "admin/member/list";
     }
