@@ -86,8 +86,6 @@ public class AdminCourseController extends BaseController {
             boolean result = courseService.add(parameter);
         }
 
-        boolean result = courseService.add(parameter);
-
         return "redirect:/admin/course/list.do";
     }
 
