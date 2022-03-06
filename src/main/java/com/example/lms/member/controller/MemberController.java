@@ -1,7 +1,9 @@
 package com.example.lms.member.controller;
 
 import com.example.lms.admin.dto.MemberDto;
+import com.example.lms.course.dto.TakeCourseDto;
 import com.example.lms.course.model.ServiceResult;
+import com.example.lms.course.service.TakeCourseService;
 import com.example.lms.member.model.MemberInput;
 import com.example.lms.member.model.ResetPasswordInput;
 import com.example.lms.member.service.MemberService;
@@ -14,12 +16,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
+import java.util.List;
 
 @RequiredArgsConstructor
 @Controller
 public class MemberController {
 
     private final MemberService memberService;
+    private final TakeCourseService takeCourseService;
 
     @RequestMapping("/member/login")
     public String login() {
@@ -82,6 +86,22 @@ public class MemberController {
         return "member/info";
     }
 
+    @PostMapping("/member/info")
+    public String memberInfoSubmit(Model model,
+                                   MemberInput parameter,
+                                   Principal principal) {
+
+        String userId = principal.getName();
+        parameter.setUserId(userId);
+
+        ServiceResult result = memberService.updateMember(parameter);
+        if (!result.isResult()) {
+            model.addAttribute("message", result.getMessage());
+            return "common/error";
+        }
+        return "redirect:/member/info";
+    }
+
     @GetMapping("/member/password")
     public String memberPassword(Model model, Principal principal) {
 
@@ -115,9 +135,9 @@ public class MemberController {
     public String memberTakeCourse(Model model, Principal principal) {
 
         String userId = principal.getName();
-        MemberDto detail = memberService.detail(userId);
+        List<TakeCourseDto> list = takeCourseService.myCourse(userId);
 
-        model.addAttribute("detail", detail);
+        model.addAttribute("list", list);
 
         return "member/takecourse";
     }

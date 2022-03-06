@@ -13,6 +13,7 @@ import com.example.lms.member.model.ResetPasswordInput;
 import com.example.lms.member.repository.MemberRepository;
 import com.example.lms.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
+import org.apache.tomcat.jni.Local;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
@@ -229,6 +230,28 @@ public class MemberServiceImpl implements MemberService {
         memberRepository.save(member);
 
         return true;
+    }
+
+    @Override
+    public ServiceResult updateMember(MemberInput parameter) {
+
+        String userId = parameter.getUserId();
+
+        Optional<Member> optionalMember = memberRepository.findById(userId);
+        if(!optionalMember.isPresent()){
+            return new ServiceResult(false, "회원 정보가 존재하지 않습니다.");
+        }
+
+        Member member = optionalMember.get();
+
+        member.setPhone(parameter.getPhone());
+        member.setZipcode(parameter.getZipcode());
+        member.setAddr(parameter.getAddr());
+        member.setAddrDetail(parameter.getAddrDetail());
+        member.setUdtDt(LocalDateTime.now());
+        memberRepository.save(member);
+
+        return new ServiceResult();
     }
 
     @Override

@@ -39,15 +39,17 @@ public class TakeCourseDto {
                 .id(x.getId())
                 .courseId(x.getCourseId())
                 .userId(x.getUserId())
+
                 .payPrice(x.getPayPrice())
                 .status(x.getStatus())
+
                 .regDt(x.getRegDt())
                 .build();
     }
 
     public String getRegDtText() {
 
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy.MM.dd HH.mm");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy.MM.dd HH:mm");
         return regDt != null ? regDt.format(formatter) : "";
 
     }
