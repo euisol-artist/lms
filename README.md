@@ -5,4 +5,4 @@ first project by using java
 </br>
 IntelliJ, mariadb
 </br>
-springboot
+springboot, mybatis
